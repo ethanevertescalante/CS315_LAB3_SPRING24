@@ -101,7 +101,7 @@ bool interactivePalindrome(const std::string &s) {
     // s[name.length()-1], to refer to the first, second, and
     // the last character of the string, respectively.
 
-   int length = s.size() - 1;
+   int length = s.length()- 1;
 
    for(int i = 0; i < s.size(); i++){
        if(s[i] != s[length]){
@@ -201,35 +201,29 @@ bool interactivePalindrome2(const std::string &s) {
     // into a string and then process this new string.
     // That is, you should only have one loop.
 
-    int length = s.size() - 1;
+    int left = 0;
+    int right = s.length() - 1;
 
-    for(int iter = 0; iter < s.size(); iter++){
-
-        if(!isalpha(s[iter]))
-        {
-            iter++;
-        }
-        if(!isalpha(s[length])){
-            length--;
+    while (left < right) {
+        if (!isalpha(s[left])) {
+            left++;
+            continue;
         }
 
-        if(iter == length && s[iter] == s[length]){
-            return true;
+        if (!isalpha(s[right])) {
+            right--;
+            continue;
         }
 
-        if(s[iter] != s[length]){
+        if (s[left] != s[right]) {
             return false;
-        }else{
-            return true;
         }
 
-
-
-
+        left++;
+        right--;
     }
 
-
-
+    return true;
 
 }
 
@@ -239,18 +233,28 @@ bool interactivePalindromeRecursive2(const std::string &s, int left, int right) 
     // The string may have non-letter characters.
     // Write this one recursively.
 
-
     // You should NOT preprocess the string.
 
     // You should NOT preprocess the string. That is,
     // you can not write a loop to collect the letters
     // into a string and then process this new string.
-    int length = s.size() - 1;
+    if(left == right){
+        return true;
+    }
+    if(!isalpha(s[left])){
+        return interactivePalindromeRecursive2(s, left+1, right);
+
+    }
+    if(!isalpha(s[right])){
+        return interactivePalindromeRecursive2(s, left, right-1);
+    }
+    if(s[left] != s[right] && (isalpha(s[left]) && isalpha(s[right]))){
+        return false;
+    }
+    return interactivePalindromeRecursive2(s, left+1, right-1);
 
 
 
-
-    return false;
 }
 
 
@@ -354,7 +358,7 @@ int main() {
 
     std::cout << std::endl;
 
-    std::cout << "Recusive Palindrome Test" << std::endl;
+    std::cout << "Recursive Palindrome Test" << std::endl;
     std::cout << "Test a man, a plan, a canal, panama: " << interactiveRecursively("a man, a plan, a canal, panama") << std::endl;
 
     std::cout << std::endl;
@@ -369,8 +373,14 @@ int main() {
 
     std::cout << std::endl;
 
-    std::cout << "Palindrome2 Interactive Test: " << std::endl;
-    std::cout << "Test *xax*: " << interactivePalindrome2("#aSsa#");
+    std::cout << "Palindrome2 Iterative Interactive Test: " << std::endl;
+    std::cout << "Test a man, a plan, a canal, panama: " << interactivePalindrome2("a man, a plan, a canal, panama") << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Palindrome2 Recursive Interactive Test: " << std::endl;
+    std::string input = "a man, a plan, a canal, panama";
+    std::cout << "Test a man, a plan, a canal, panama: " << interactivePalindromeRecursive2(input, 0, input.size()-1) << std::endl;
 
     return 0;
 }
