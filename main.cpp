@@ -31,7 +31,7 @@ bool recursiveMember(const std::vector<int> &numbers, int n, int key) {
     bool val = recursiveMember(numbers, n-1, key);
     return val;
 
-    return false;  // This is a placeholder to make clion happy
+
 }
 
 bool iterativeAreIdentical(const std::vector<int> &numbers1, const std::vector<int> &numbers2, int n) {
@@ -101,18 +101,48 @@ bool interactivePalindrome(const std::string &s) {
     // s[name.length()-1], to refer to the first, second, and
     // the last character of the string, respectively.
 
-    return false;
+   int length = s.size() - 1;
+
+   for(int i = 0; i < s.size(); i++){
+       if(s[i] != s[length]){
+           return false;
+       }
+
+       if(i == length){
+           return true;
+       }
+
+       length--;
+
+   }
+
 }
 
 
 bool interactiveRecursively(const std::string &s) {
-   // Given a string, determine if it is a palindrome or not.
-   // Write this one recursively.
+    // Given a string, determine if it is a palindrome or not.
+    // Write this one recursively.
 
-   return false;
+    std::string sCopy = s;
+    int i = 0;
+    int length = sCopy.size() - 1;
+
+    if(sCopy.size() == 0){
+        return true;
+    }
+
+    if(sCopy[i] != sCopy[length])
+    {
+        return false;
+    }
+
+    sCopy = s.substr(1, s.size()-2);
+
+    return interactiveRecursively(sCopy);
+
 }
 
-bool countInversionsIteratively(const std::vector<int> &v, int n) {
+int countInversionsIteratively(const std::vector<int> &v, int n) {
     // Two consecutive values in a vector are inverted at index i if
     // v.at(i) > v.at(i+1). The assumption is that i+1 < n.
 
@@ -126,12 +156,35 @@ bool countInversionsIteratively(const std::vector<int> &v, int n) {
     // this function should return 1 as 10 is larger
     // than 6 -- the only inversion in this list.
 
+    int count = 0;
+
+    for(int i = 1; i < n; i++)
+    {
+        if(v.at(i-1) > v.at(i))
+        {
+            count++;
+        }
+    }
+
+    return count;
 
 }
 
-bool countInversionsRecursively(const std::vector<int> &v, int n) {
+int countInversionsRecursively(const std::vector<int> &v, int n, int count) {
      // Count and return the number of inversion in the first n
      // elements of v, recursively.
+
+     if(n <= 1){
+         return count;
+     }
+
+     if(v.at(n-1) < v.at(n-2))
+     {
+         count++;
+     }
+
+     return countInversionsRecursively(v, n - 1, count);
+
      
 }
 
@@ -233,6 +286,10 @@ int main() {
     std::vector<int> numbers5 = {32, 21, 80, 56, 100};
     std::vector<int> numbers6 = {34, 100, 30, 56, 21};
 
+    //countInversions
+    std::vector<int> numbers7 = {5, 8, 10, 6, 7};
+    std::vector<int> numbers8 = {8, 10, 22, 16, 36, 100, 50};
+
 
     std::cout << "Iterative Member Test" << std::endl;
     std::cout << "Find 200:"  <<iterativeMember(numbers2, 7, 200) << std::endl;
@@ -250,10 +307,34 @@ int main() {
     std::cout << "{34, 21, 80, 56, 100} and {34, 21, 80, 56, 100}: " << iterativeAreIdentical(numbers3, numbers4, 5) << std::endl;
     std::cout << "{32, 21, 80, 56, 100} and {34, 100, 30, 56, 21}: " << iterativeAreIdentical(numbers5, numbers6, 5) << std::endl;
 
+    std::cout << std::endl;
+
     std::cout << "Recursive areIdentical Test" << std::endl;
     std::cout << "{34, 21, 80, 56, 100} and {34, 21, 80, 56, 100}: " << recursiveAreIdentical(numbers3, numbers4, 5) << std::endl;
     std::cout << "{32, 21, 80, 56, 100} and {34, 100, 30, 56, 21}: " << recursiveAreIdentical(numbers5, numbers6, 5) << std::endl;
 
+    std::cout << std::endl;
+
+    std::cout << "Interactive Palindrome Test" << std::endl;
+    std::cout << "Test Kayak: " << interactivePalindrome("kayak") << std::endl;
+    std::cout << "Test dad: " << interactivePalindrome("dad") << std::endl;
+    std::cout << "Test boat: " << interactivePalindrome("boat") << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Recusive Palindrome Test" << std::endl;
+    std::cout << "Test Kayak: " << interactiveRecursively("kayak") << std::endl;
+    std::cout << "Test dad: " << interactiveRecursively("dad") << std::endl;
+    std::cout << "Test boat: " << interactiveRecursively("boat") << std::endl;
+
+
+    std::cout << "countInversionsIteratively Test" << std::endl;
+    std::cout << "Test {5, 8, 10, 6, 7}: " << countInversionsIteratively(numbers7, 5) << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "countInversionsRecursively Test" << std::endl;
+    std::cout << "Test {8, 10, 22, 16, 36, 100, 50}: " << countInversionsRecursively(numbers8, 7, 0) << std::endl;
 
     return 0;
 }
