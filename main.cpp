@@ -170,22 +170,20 @@ int countInversionsIteratively(const std::vector<int> &v, int n) {
 
 }
 
-int countInversionsRecursively(const std::vector<int> &v, int n, int count) {
+int countInversionsRecursively(const std::vector<int> &v, int n) {
      // Count and return the number of inversion in the first n
      // elements of v, recursively.
 
+
      if(n <= 1){
-         return count;
+         return 0;
      }
 
      if(v.at(n-1) < v.at(n-2))
      {
-         count++;
+        return 1 + countInversionsRecursively(v, n - 1);
      }
 
-     return countInversionsRecursively(v, n - 1, count);
-
-     
 }
 
 bool interactivePalindrome2(const std::string &s) {
@@ -203,20 +201,54 @@ bool interactivePalindrome2(const std::string &s) {
     // into a string and then process this new string.
     // That is, you should only have one loop.
 
-    return false;
+    int length = s.size() - 1;
+
+    for(int iter = 0; iter < s.size(); iter++){
+
+        if(!isalpha(s[iter]))
+        {
+            iter++;
+        }
+        if(!isalpha(s[length])){
+            length--;
+        }
+
+        if(iter == length && s[iter] == s[length]){
+            return true;
+        }
+
+        if(s[iter] != s[length]){
+            return false;
+        }else{
+            return true;
+        }
+
+
+
+
+    }
+
+
+
+
 }
 
 
-bool interactivePalindromeRecursive2(const std::string &s) {
+bool interactivePalindromeRecursive2(const std::string &s, int left, int right) {
     // Given a string, determine if it is a palindrome or not.
     // The string may have non-letter characters.
     // Write this one recursively.
+
 
     // You should NOT preprocess the string.
 
     // You should NOT preprocess the string. That is,
     // you can not write a loop to collect the letters
     // into a string and then process this new string.
+    int length = s.size() - 1;
+
+
+
 
     return false;
 }
@@ -323,10 +355,9 @@ int main() {
     std::cout << std::endl;
 
     std::cout << "Recusive Palindrome Test" << std::endl;
-    std::cout << "Test Kayak: " << interactiveRecursively("kayak") << std::endl;
-    std::cout << "Test dad: " << interactiveRecursively("dad") << std::endl;
-    std::cout << "Test boat: " << interactiveRecursively("boat") << std::endl;
+    std::cout << "Test a man, a plan, a canal, panama: " << interactiveRecursively("a man, a plan, a canal, panama") << std::endl;
 
+    std::cout << std::endl;
 
     std::cout << "countInversionsIteratively Test" << std::endl;
     std::cout << "Test {5, 8, 10, 6, 7}: " << countInversionsIteratively(numbers7, 5) << std::endl;
@@ -334,7 +365,12 @@ int main() {
     std::cout << std::endl;
 
     std::cout << "countInversionsRecursively Test" << std::endl;
-    std::cout << "Test {8, 10, 22, 16, 36, 100, 50}: " << countInversionsRecursively(numbers8, 7, 0) << std::endl;
+    std::cout << "Test {8, 10, 22, 16, 36, 100, 50}: " << countInversionsRecursively(numbers8, 7) << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Palindrome2 Interactive Test: " << std::endl;
+    std::cout << "Test *xax*: " << interactivePalindrome2("#aSsa#");
 
     return 0;
 }
