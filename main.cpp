@@ -7,12 +7,29 @@ bool iterativeMember(const std::vector<int> &numbers, int n, int key) {
     // Write an iterative solution for the member problem.
     // Is "key" one of the values in numbers[0 .. n-1]?
 
+    for(size_t iter = 0; iter < n; iter++){
+        if(numbers.at(iter) == key)
+        {
+            return true;
+        }
+    }
+
     return false;  // This is a placeholder to make clion happy
 }
 
 bool recursiveMember(const std::vector<int> &numbers, int n, int key) {
     // Write a recursive solution to the member problem.
     // Is "key" one of the values in numbers[0 .. n-1]?
+    if(n == 0){
+        return false;
+    }
+
+    if(numbers.at(n-1) == key){
+        return true;
+    }
+
+    bool val = recursiveMember(numbers, n-1, key);
+    return val;
 
     return false;  // This is a placeholder to make clion happy
 }
@@ -26,7 +43,13 @@ bool iterativeAreIdentical(const std::vector<int> &numbers1, const std::vector<i
     // numbers1 contains 34, 21, 80, 56, 100
     // numbers2 contains 34, 21, 80, 56, 100
     // iterativeAreIdentical(numbers1, number2, 5) should return true.
-
+    for(int i = 0; i < n; i++){
+        if(numbers1.at(i) != numbers2.at(i))
+        {
+            return false;
+        }
+    }
+    return true;
     // Example 2:
     // numbers1 contains 32, 21, 80, 56, 100
     // numbers2 contains 34, 100, 30, 56, 21
@@ -44,6 +67,20 @@ bool recursiveAreIdentical(const std::vector<int> &numbers1, const std::vector<i
     // numbers1 contains 34, 21, 80, 56, 100
     // numbers2 contains 34, 21, 80, 56, 100
     // iterativeAreIdentical(numbers1, number2, 5) should return true.
+
+    if(n == 0){
+        return true;
+    }
+
+    if(numbers1.at(n-1) != numbers2.at(n-1)){
+        return false;
+    }
+
+    return recursiveAreIdentical(numbers1, numbers2, n-1);
+
+
+
+
 
     // Example 2:
     // numbers1 contains 32, 21, 80, 56, 100
@@ -117,7 +154,7 @@ bool interactivePalindrome2(const std::string &s) {
 }
 
 
-bool interactiveRecursively2(const std::string &s) {
+bool interactivePalindromeRecursive2(const std::string &s) {
     // Given a string, determine if it is a palindrome or not.
     // The string may have non-letter characters.
     // Write this one recursively.
@@ -184,7 +221,38 @@ void recursiveIntersection(const std::vector<int> &values1,
 
 int main() {
     // Here is how you can create a vector and initialize it.
+
+    //default vector
     std::vector<int> numbers1 = {10, 20, 65, 23, 66, 42, 12, 55};
+    std::vector<int> numbers2 = {8, 10, 22, 16, 36, 100, 50};
+
+    //areIdentical
+    std::vector<int> numbers3 = {34, 21, 80, 56, 100};
+    std::vector<int> numbers4 = {34, 21, 80, 56, 100};
+
+    std::vector<int> numbers5 = {32, 21, 80, 56, 100};
+    std::vector<int> numbers6 = {34, 100, 30, 56, 21};
+
+
+    std::cout << "Iterative Member Test" << std::endl;
+    std::cout << "Find 200:"  <<iterativeMember(numbers2, 7, 200) << std::endl;
+    std::cout << "Find 16:"  <<iterativeMember(numbers2, 7, 16) << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Recursive Member Test" << std::endl;
+    std::cout << "Find 200:"  << recursiveMember(numbers2, 7, 200) << std::endl;
+    std::cout << "Find 16:"  << recursiveMember(numbers2, 7, 16) << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Iterative areIdentical Test" << std::endl;
+    std::cout << "{34, 21, 80, 56, 100} and {34, 21, 80, 56, 100}: " << iterativeAreIdentical(numbers3, numbers4, 5) << std::endl;
+    std::cout << "{32, 21, 80, 56, 100} and {34, 100, 30, 56, 21}: " << iterativeAreIdentical(numbers5, numbers6, 5) << std::endl;
+
+    std::cout << "Recursive areIdentical Test" << std::endl;
+    std::cout << "{34, 21, 80, 56, 100} and {34, 21, 80, 56, 100}: " << recursiveAreIdentical(numbers3, numbers4, 5) << std::endl;
+    std::cout << "{32, 21, 80, 56, 100} and {34, 100, 30, 56, 21}: " << recursiveAreIdentical(numbers5, numbers6, 5) << std::endl;
 
 
     return 0;
