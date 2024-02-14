@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 
@@ -181,10 +182,14 @@ int countInversionsRecursively(const std::vector<int> &v, int n) {
 
      if(v.at(n-1) < v.at(n-2))
      {
-        return 1 + countInversionsRecursively(v, n - 1);
+        return 1 + countInversionsRecursively(v, n-1);
      }
 
+     return countInversionsRecursively(v, n-1);
+
+
 }
+
 
 bool interactivePalindrome2(const std::string &s) {
     // Given a string, determine if it is a palindrome or not.
