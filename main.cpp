@@ -1,3 +1,4 @@
+//Ethan Escalante and James Togher
 
 #include <iostream>
 #include <vector>
